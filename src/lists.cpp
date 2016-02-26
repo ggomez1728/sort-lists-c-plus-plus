@@ -8,6 +8,7 @@
 #include <iostream>
 #include <stdlib.h>     /* srand, rand */
 #include <time.h>       /* time */
+#include <ctime>// include this header
 
 #include <string>
 using namespace std;
@@ -683,7 +684,7 @@ int main() {
     std::cout << "DATA GENERADA " << std::endl;
     sort.print();
     std::cout << "espere, calculando.... " <<std::endl;
-    
+    int start_s=clock();
     switch (sort_select) {
         case 1:
             std::cout << "1- Bubble " << std::endl; //Usando Lista simple
@@ -715,5 +716,10 @@ int main() {
     }
     std::cout << "DATA ORDENADA " << std::endl;
     sort.print();
+    
+    // the code you wish to time goes here
+    int stop_s=clock();
+    cout << "tiempo de ejecucion: " << (stop_s-start_s)/double(CLOCKS_PER_SEC)*1000 << endl;
+    
     return 0;
 }

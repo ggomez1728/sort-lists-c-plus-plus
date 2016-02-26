@@ -377,6 +377,9 @@ public:
     Sort(List_Simple<Tipo>& List_t){
         ListSort = List_t;
     };
+    void load_data(List_Simple<Tipo>& List_t){
+        ListSort = List_t;
+    }
     //muestra los datos ordenados
     void print()
     {
@@ -642,7 +645,7 @@ public:
 };
 
 
-List_Simple<int> Lista1;
+List_Simple<int> Lista1, Lista2;
 Pointer ap, sig;
 int valor, valor_aux;
 
@@ -667,8 +670,10 @@ int main() {
     std::cout << "5- Merge" << std::endl; //falta
     std::cout << "6- Shell" << std::endl; //Usando Lista simple
     std::cout << "7- Selection" << std::endl; //Usando Lista simple
+    std::cout << "8- Todos" << std::endl; //Usando Lista simple
+    
     std::cout <<  "=============================== " << std::endl;
-    std::cout << "Introduzca el ordenamiento (1-7): " << std::endl;
+    std::cout << "Introduzca el ordenamiento (1-8): " << std::endl;
     
     
     std::cin >> sort_select;
@@ -679,11 +684,13 @@ int main() {
     {
         Lista1.insertBegin(rand() % size_elements + 1);
     }
-    
-    Sort<int> sort(Lista1);
+    Lista2 = Lista1;
+    Sort<int> sort(Lista2);
     std::cout << "DATA GENERADA " << std::endl;
     sort.print();
     std::cout << "espere, calculando.... " <<std::endl;
+    int stop1_s,stop2_s, stop3_s, stop4_s;
+    
     int start_s=clock();
     switch (sort_select) {
         case 1:
@@ -711,15 +718,50 @@ int main() {
             std::cout << "7- Selection" << std::endl; //Usando Lista simple  break;
             sort.selection();
             break;
+        case 8:
+            start_s=clock();
+            std::cout << "Bubble " << std::endl; //Usando Lista simple
+            Lista2 = Lista1;
+            sort.load_data(Lista2);
+            sort.bubble();
+            stop1_s =clock();
+            cout << "time: " << (stop1_s-start_s)/double(CLOCKS_PER_SEC)*1000 << endl;
+            
+            std::cout << "Optimizing Bubble " << std::endl; //Usando Lista simple
+            Lista2 = Lista1;
+            sort.load_data(Lista2);
+            sort.optimizingBubble();
+            stop2_s =clock();
+            cout << "time: " << (stop2_s-start_s)/double(CLOCKS_PER_SEC)*1000 << endl;
+            
+            std::cout << "Shell" << std::endl; //Usando Lista simple
+            Lista2 = Lista1;
+            sort.load_data(Lista2);
+            sort.Shell();
+            stop3_s =clock();
+            cout << "time: " << (stop3_s-start_s)/double(CLOCKS_PER_SEC)*1000 << endl;
+            
+            std::cout << "Selection" << std::endl; //Usando Lista simple
+            Lista2 = Lista1;
+            sort.load_data(Lista2);
+            sort.selection();
+            stop4_s =clock();
+            cout << "time: " << (stop4_s-start_s)/double(CLOCKS_PER_SEC)*1000 << endl;
+            
+            break;
         default:
             cout << "la opcion es invalida";
     }
-    std::cout << "DATA ORDENADA " << std::endl;
-    sort.print();
+    if (sort_select != 8) {
+        std::cout << "DATA ORDENADA " << std::endl;
+        sort.print();
+        // the code you wish to time goes here
+        int stop_s=clock();
+        cout << "time: " << (stop_s-start_s)/double(CLOCKS_PER_SEC)*1000 << endl;
+    }
     
-    // the code you wish to time goes here
-    int stop_s=clock();
-    cout << "tiempo de ejecucion: " << (stop_s-start_s)/double(CLOCKS_PER_SEC)*1000 << endl;
+    
+    
     
     return 0;
 }
